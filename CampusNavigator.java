@@ -10,6 +10,13 @@ public class CampusNavigator {
         int classTime = scnr.nextInt();
         int routePreference = scnr.nextInt();
 
+        System.out.println("Current location: " + currentLocation);
+        System.out.println("Class location: " + classLocation);
+        System.out.println("Walking speed: " + walkingSpeed);
+        System.out.println("Class Time: " + classTime);
+        System.out.println("Route preference: " + routePreference);
+
+
 scnr.close(); 
     }
 }
