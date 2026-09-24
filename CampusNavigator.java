@@ -9,6 +9,9 @@ public class CampusNavigator {
         double walkingSpeed = scnr.nextDouble();
         String classTime = scnr.nextLine();
         int routePreference = scnr.nextInt();
+        double travelTime = (distance / walkingSpeed) / 60.0;
+        double distance;
+        double arrivalTime = (classTime - travelTime);
 
         System.out.println("Current location: " + currentLocation);
         System.out.println("Class location: " + classLocation);
@@ -18,7 +21,7 @@ public class CampusNavigator {
         System.out.println("1. Shortest Path");
         System.out.println("2. Scenic Path");
         System.out.println("3. Accessible Path");
-        System.out.print("Choose Route (1-3)");
+        System.out.println("Choose Route (1-3)");
 
         switch (routePreference) {
             case 1:
@@ -36,7 +39,16 @@ public class CampusNavigator {
             default:
                 System.out.println("Invalid choice. Defaulting to Shortest Route.");
                 break;    
-                
+
+        System.out.println("Distance (miles): " + distance);
+        System.out.println("Travel time (minutes): " + travelTime);
+        System.out.println("Arrival Time: " + arrivalTime);
+
+        if (travelTime <= classTime) {
+            System.out.println("You will arrive on time.");
+        } else {
+            System.out.println("You will be late.");
+        }
         }
 scnr.close(); 
     }
