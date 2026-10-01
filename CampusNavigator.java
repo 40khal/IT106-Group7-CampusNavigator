@@ -1,31 +1,20 @@
-import java.util.Scanner;
+import javax.swing.JOptionPane;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 
 public class CampusNavigator {
-    public static void main (String[] args) {
-        Scanner scnr = new Scanner(System.in);
+    public static void main(String[] args) {
 
-        String currentLocation = scnr.nextLine();
-        String classLocation = scnr.nextLine();
-        double walkingSpeed = scnr.nextDouble();
-        String currentTime = scnr.nextLine();
-        String classTime = scnr.nextLine();
-        String routePreference = scnr.nextLine();
-        double distance = scnr.nextDouble();
+        String currentLocation = JOptionPane.showInputDialog("Enter your current location:");
+        String classLocation = JOptionPane.showInputDialog("Enter the class location:");
+        double walkingSpeed = Double.parseDouble(JOptionPane.showInputDialog("Enter your walking speed (m/s):"));
+        String currentTime = JOptionPane.showInputDialog("Enter the current time (HH:mm):");
+        String classTime = JOptionPane.showInputDialog("Enter the class time (HH:mm):");
+        String routePreference = JOptionPane.showInputDialog("Choose your route preference:\n1. Shortest Path\n2. Scenic Path\n3. Accessible Path");
+        double distance = Double.parseDouble(JOptionPane.showInputDialog("Enter the distance (m):"));
         double travelTime = (distance / walkingSpeed) / 60.0;
 
-        System.out.println("Current location: " + currentLocation);
-        System.out.println("Class location: " + classLocation);
-        System.out.println("Walking speed (m/s): " + walkingSpeed);
-        System.out.println("Current Time: " + currentTime);
-        System.out.println("Class Time: " + classTime);
-        System.out.println("Route preference: ");
-        System.out.println("1. Shortest Path");
-        System.out.println("2. Scenic Path");
-        System.out.println("3. Accessible Path");
-        System.out.println("Choose Route (1-3)");
 
         switch (routePreference) {
             case "1":
@@ -41,21 +30,37 @@ public class CampusNavigator {
                 break;  
                 
             default:
-                System.out.println("No User Input. Defaulting to Shortest Route.");
                 routePreference = "Shortest Path";
                 break;    
-        System.out.println("Chosen Route: " + routePreference);
     }
 
-        System.out.println("Current Time: "+ currentTime);
-        System.out.println("Travel time (minutes): " + travelTime);
-        System.out.println("Class Time: " + classTime);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+        LocalTime currentTimeValue = LocalTime.parse(currentTime, formatter);
+        LocalTime classTimeValue = LocalTime.parse(classTime, formatter);
+        long travelMinutes = (long) Math.ceil(travelTime);
+        LocalTime arrivalTime = currentTimeValue.plusMinutes(travelMinutes);
 
-        if ((currentTime + travelTime) <= classTime) {
-            System.out.println("You will arrive on time.");
+        String result;
+
+        if (!arrivalTime.isAfter(classTimeValue)) {
+            result = "You will arive on time.";
         } else {
-            System.out.println("You will be late.");
+            result = "You will be late.";
         }
-scnr.close(); 
-    }
+
+        JOptionPane.showMessageDialog(null, 
+            "Current Location: " + currentLocation +
+            "\nClass Location: " + classLocation +
+            "\nRoute Preference: " + routePreference +
+            "\nDistance: " + distance + " m" +
+            "\nTravel Time: " + String.format("%.2f", travelTime) + "minutes" +
+            "\nCurrent Time : " + currentTime +
+            "\nArrival Time: " + arrivalTime + 
+            "\nClass Time: " + classTime +
+            "\n\n" + result,
+            "Campus Navigator",
+            JOptionPane.INFORMATION_MESSAGE);
+
+        System.exit(0);
+        }
 }
