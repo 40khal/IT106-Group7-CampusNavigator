@@ -6,6 +6,7 @@ import java.time.format.DateTimeFormatter;
 public class CampusNavigator {
     public static void main(String[] args) {
 
+        // Gets all the information needed from the student
         String currentLocation = JOptionPane.showInputDialog("Enter your current location:");
         String classLocation = JOptionPane.showInputDialog("Enter the class location:");
         double walkingSpeed = Double.parseDouble(JOptionPane.showInputDialog("Enter your walking speed (m/s):"));
@@ -13,9 +14,11 @@ public class CampusNavigator {
         String classTime = JOptionPane.showInputDialog("Enter the class time (HH:mm):");
         String routePreference = JOptionPane.showInputDialog("Choose your route preference:\n1. Shortest Path\n2. Scenic Path\n3. Accessible Path");
         double distance = Double.parseDouble(JOptionPane.showInputDialog("Enter the distance (m):"));
+        // Calculates how long the walk should take in minutes
         double travelTime = (distance / walkingSpeed) / 60.0;
 
 
+        // Uses the student's choice to decide which route they want
         switch (routePreference) {
             case "1":
                 routePreference = "Shortest Path";
@@ -34,6 +37,7 @@ public class CampusNavigator {
                 break;    
     }
 
+        // Calculates the student's estimated arrival time
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
         LocalTime currentTimeValue = LocalTime.parse(currentTime, formatter);
         LocalTime classTimeValue = LocalTime.parse(classTime, formatter);
@@ -42,12 +46,14 @@ public class CampusNavigator {
 
         String result;
 
+        // Compares the arrival time to the class time to see if the student will be late
         if (!arrivalTime.isAfter(classTimeValue)) {
             result = "You will arive on time.";
         } else {
             result = "You will be late.";
         }
 
+        // Displays the final route and travel information to the student
         JOptionPane.showMessageDialog(null, 
             "Current Location: " + currentLocation +
             "\nClass Location: " + classLocation +
