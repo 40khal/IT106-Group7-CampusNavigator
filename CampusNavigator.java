@@ -1,3 +1,12 @@
+/*
+Campus Navigator helps GMU students see how long it'll take to walk 
+between campus buildings and whether they'll arrive on time for class.
+
+The program uses the student's location, destination, walking speed, 
+current time, class time, and route preference to get the ETA.
+*/
+
+
 import javax.swing.JOptionPane;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
